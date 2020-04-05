@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.github.encryptorcode.pluralize.Util.p;
-
 public class Pluralize {
     // Rule storage - pluralize and singularize need to be run sequentially,
     // while other rules can be optimized using an object for instant lookups.
@@ -512,5 +510,9 @@ public class Pluralize {
         addUncountableRule(p("o[iu]s$")); // "carnivorous"
         addUncountableRule(p("pox$")); // "chickpox", "smallpox"
         addUncountableRule(p("sheep$"));
+    }
+
+    public static Pattern p(String pattern){
+        return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 }

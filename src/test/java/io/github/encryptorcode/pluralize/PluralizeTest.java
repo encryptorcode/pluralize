@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static io.github.encryptorcode.pluralize.Util.p;
+import static io.github.encryptorcode.pluralize.Pluralize.p;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
