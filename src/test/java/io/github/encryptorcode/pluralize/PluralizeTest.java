@@ -82,14 +82,14 @@ public class PluralizeTest {
 
     @Test
     @Order(7)
-    public void prependCount(){
+    public void prependCount() {
         assertEquals("plural words", "5 tests", Pluralize.pluralize("test", 5, true));
         assertEquals("singular words", "1 test", Pluralize.pluralize("test", 1, true));
     }
 
     @Test
     @Order(8)
-    public void uncountableRules(){
+    public void uncountableRules() {
         assertEquals("papers", Pluralize.pluralize("paper"));
         Pluralize.addUncountableRule("paper");
         assertEquals("paper", Pluralize.pluralize("paper"));
@@ -97,7 +97,7 @@ public class PluralizeTest {
 
     @Test
     @Order(9)
-    public void irregularRule(){
+    public void irregularRule() {
         assertEquals("irregulars", Pluralize.pluralize("irregular"));
         Pluralize.addIrregularRule("irregular", "regular");
         assertEquals("regular", Pluralize.pluralize("irregular"));
@@ -105,7 +105,7 @@ public class PluralizeTest {
 
     @Test
     @Order(10)
-    public void addPluralRegexRule(){
+    public void addPluralRegexRule() {
         assertEquals("regexes", Pluralize.plural("regex"));
         Pluralize.addPluralRule(p("gex$"), "gexii");
         assertEquals("regexii", Pluralize.plural("regex"));
@@ -113,7 +113,7 @@ public class PluralizeTest {
 
     @Test
     @Order(11)
-    public void addSingularRegexRule(){
+    public void addSingularRegexRule() {
         assertEquals("single", Pluralize.singular("singles"));
         Pluralize.addSingularRule(p("singles$"), "singular");
         assertEquals("singular", Pluralize.singular("singles"));
@@ -121,7 +121,7 @@ public class PluralizeTest {
 
     @Test
     @Order(12)
-    public void addPluralStringRule(){
+    public void addPluralStringRule() {
         assertEquals("people", Pluralize.plural("person"));
         Pluralize.addPluralRule("person", "peeps");
         assertEquals("peeps", Pluralize.plural("person"));
@@ -129,7 +129,7 @@ public class PluralizeTest {
 
     @Test
     @Order(13)
-    public void addSingularStringRule(){
+    public void addSingularStringRule() {
         assertEquals("morning", Pluralize.singular("mornings"));
         Pluralize.addSingularRule("mornings", "suck");
         assertEquals("suck", Pluralize.singular("mornings"));
@@ -149,9 +149,7 @@ public class PluralizeTest {
     private static Object[] combine(List<Map<String, String>> tests) {
         List<Object[]> allTests = new ArrayList<>();
         for (Map<String, String> test : tests) {
-            test.forEach((singular, plural) -> {
-                allTests.add(new Object[]{singular, plural});
-            });
+            test.forEach((singular, plural) -> allTests.add(new Object[]{singular, plural}));
         }
         return allTests.toArray(new Object[0]);
     }

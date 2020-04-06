@@ -25,12 +25,12 @@ public class Pluralize {
 
     /**
      * Sanitize a pluralization rule to a usable regular expression.
-     *
+     * <p>
      * Note: Method used for converting {@link String} to {@link Pattern}.
      * Method name can be misleading. We are trying to have the same name as in JS
      */
-    private static Pattern sanitizeRule(String word){
-        return p("^"+word+"$");
+    private static Pattern sanitizeRule(String word) {
+        return p("^" + word + "$");
     }
 
     /**
@@ -69,14 +69,14 @@ public class Pluralize {
 
     /**
      * Interpolate a regexp string.
-     *
+     * <p>
      * This method couldn't be the same as in JS. But we haven't changed the name of the method to something relevant.
      * TODO: Try to optimise this method to match JS code
      */
-    private static String interpolate(List<String> matches, String replacement){
+    private static String interpolate(List<String> matches, String replacement) {
         StringBuffer resultantString = new StringBuffer();
         Matcher matcher = MARKERS_REGEX.matcher(replacement);
-        while(matcher.find()){
+        while (matcher.find()) {
             String group = matcher.group();
             int index = Integer.parseInt(group.substring(1));
             matcher.appendReplacement(resultantString, matches.get(index));
@@ -88,7 +88,7 @@ public class Pluralize {
     /**
      * Replace a word using a rule
      */
-    private static String replace(String word, Matcher matcher, RegexRule rule){
+    private static String replace(String word, Matcher matcher, RegexRule rule) {
         List<String> matches = new ArrayList<>();
         for (int i = 0; i <= matcher.groupCount(); i++) {
             matches.add(matcher.group(i) == null ? EMPTY_STRING : matcher.group(i));
@@ -98,17 +98,17 @@ public class Pluralize {
 
     /**
      * Replaces the first find using matcher
-     *
+     * <p>
      * We have this method because we cannot pass functions in Java as we can do in JS.
      * TODO: Try to optimise this method further to match JS code
      */
-    private static String replaceFirst(Matcher matcher, String word, String replacement){
+    private static String replaceFirst(Matcher matcher, String word, String replacement) {
         StringBuffer buffer = new StringBuffer();
         matcher.reset();
-        if(matcher.find()){
+        if (matcher.find()) {
             String group = matcher.group();
-            if(group.equals(EMPTY_STRING)){
-                matcher.appendReplacement(buffer, restoreCase(String.valueOf(word.charAt(word.length()-1)), replacement));
+            if (group.equals(EMPTY_STRING)) {
+                matcher.appendReplacement(buffer, restoreCase(String.valueOf(word.charAt(word.length() - 1)), replacement));
             } else {
                 matcher.appendReplacement(buffer, restoreCase(group, replacement));
             }
@@ -128,7 +128,7 @@ public class Pluralize {
         int len = rules.size();
 
         // Iterate over the sanitization rules and use the first one to match.
-        while (len --> 0) {
+        while (len-- > 0) {
             RegexRule rule = rules.get(len);
             Matcher matcher = rule.getPattern().matcher(word);
             if (matcher.find()) {
@@ -175,7 +175,7 @@ public class Pluralize {
     /**
      * Pluralize or singularize a word based on the passed in count.
      *
-     * @param word  The word to pluralize
+     * @param word The word to pluralize
      */
     public static String pluralize(String word) {
         return pluralize(word, null);
@@ -500,7 +500,7 @@ public class Pluralize {
         addUncountableRule("wildebeest");
         addUncountableRule("wildlife");
         addUncountableRule("you");
-        addUncountableRule(p("pok[eé]mon$"));
+        addUncountableRule(p("pok[e\u00E9]mon$"));
 
         // Regexes.
         addUncountableRule(p("[^aeiou]ese$")); // "chinese", "japanese"
@@ -512,7 +512,7 @@ public class Pluralize {
         addUncountableRule(p("sheep$"));
     }
 
-    public static Pattern p(String pattern){
+    public static Pattern p(String pattern) {
         return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
     }
 }
